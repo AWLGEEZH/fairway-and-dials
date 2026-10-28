@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fairway &amp; Dials</title>
+<meta name="description" content="Curated pre-owned golf clubs and mechanical watches.">
+<link rel="icon" href="badge.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1f4d36;
+    --brass: #b98a3f;
+    --cream: #f3efe4;
+    --ink: #1b2620;
+    --muted: #4a564f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Jost', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 20px;
+    gap: 28px;
+  }
+  .badge { width: min(220px, 55vw); height: auto; }
+  h1 {
+    margin: 0;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(44px, 9vw, 84px);
+    line-height: 1;
+    color: var(--green);
+  }
+  h1 .amp { color: var(--brass); font-weight: 500; }
+  .rule { width: 96px; height: 2px; background: var(--brass); border: 0; margin: 0; }
+  .tag {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .pitch { margin: 0; max-width: 34em; font-size: 18px; line-height: 1.6; color: var(--muted); }
+  .links { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 24px;
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--green);
+  }
+  .btn.primary { background: var(--green); color: var(--cream); }
+  .btn.primary:hover { background: #14331f; }
+  .btn.secondary { color: var(--green); }
+  .btn.secondary:hover { background: #e6e0cf; }
+  .btn:focus-visible { outline: 3px solid var(--brass); outline-offset: 3px; }
+  footer { padding: 24px 20px; text-align: center; font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <img class="badge" src="badge.svg" alt="Fairway &amp; Dials badge: a watch dial with a golf flagstick for a minute hand">
+  <h1>Fairway <span class="amp">&amp;</span> Dials</h1>
+  <hr class="rule">
+  <p class="tag">Golf clubs · Timepieces</p>
+  <p class="pitch">Hand-picked pre-owned clubs and mechanical watches, for people who play on Saturday and wear something mechanical doing it. Opening soon.</p>
+  <div class="links">
+    <a class="btn primary" href="https://www.instagram.com/fairwayanddials/">Follow on Instagram</a>
+    <a class="btn secondary" href="mailto:hello@fairwayanddials.com">hello@fairwayanddials.com</a>
+  </div>
+</main>
+<footer>© 2026 Fairway &amp; Dials · Seattle</footer>
+</body>
+</html>

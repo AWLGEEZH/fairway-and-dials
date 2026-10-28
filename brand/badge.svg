@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Fairway &amp; Dials badge">
+<circle cx="100" cy="100" r="97" fill="#1f4d36"/>
+<circle cx="100" cy="100" r="88" fill="#f8f5ec"/>
+<circle cx="100" cy="100" r="80" fill="none" stroke="#1f4d36" stroke-width="5" stroke-dasharray="0.9 7.4775"/>
+<circle cx="100" cy="100" r="80" fill="none" stroke="#1f4d36" stroke-width="10" stroke-dasharray="2.4 39.488" stroke-dashoffset="1.2"/>
+<path d="M40 140 Q100 106 160 140 A72.1 72.1 0 0 1 40 140 Z" fill="#3d7552"/>
+<path d="M52 152 Q100 128 148 152" fill="none" stroke="#5c9470" stroke-width="1.2"/>
+<ellipse cx="100" cy="131" rx="7" ry="2.4" fill="#14331f"/>
+<line x1="100" y1="131" x2="100" y2="38" stroke="#1b2620" stroke-width="2.6" stroke-linecap="round"/>
+<polygon points="101,38 134,48 101,58" fill="#b98a3f"/>
+<line x1="100" y1="100" x2="73" y2="84" stroke="#1b2620" stroke-width="5" stroke-linecap="round"/>
+<circle cx="100" cy="100" r="7" fill="#ffffff" stroke="#1b2620" stroke-width="1.4"/>
+<circle cx="98" cy="98" r="0.9" fill="#b9b4a6"/>
+<circle cx="102" cy="98" r="0.9" fill="#b9b4a6"/>
+<circle cx="100" cy="101.5" r="0.9" fill="#b9b4a6"/>
+<circle cx="96.5" cy="102" r="0.9" fill="#b9b4a6"/>
+<circle cx="103.5" cy="102" r="0.9" fill="#b9b4a6"/>
+</svg>
