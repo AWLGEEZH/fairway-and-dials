@@ -25,6 +25,7 @@ Goal: the domain shows a real page the day it's bought, and the Instagram bio ha
 | Connect `fairwayanddials.com` and `www` | Claude | Both load the site over HTTPS |
 | Email waitlist signup | Claude | Signups are stored (Supabase table) and Doyle can export them |
 | Basic analytics | Claude | Vercel Web Analytics turned on |
+| Social share metadata, icon set and social card | Claude | Link previews render on Instagram, iMessage and X |
 
 ## Phase 2: Storefront MVP (weeks 3–6)
 
