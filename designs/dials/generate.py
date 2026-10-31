@@ -13,12 +13,20 @@ OUT = Path(__file__).parent
 GREEN, BRASS, CREAM, INK, MUTED = "#1f4d36", "#b98a3f", "#f3efe4", "#1b2620", "#4a564f"
 LUME, RECESS = "#e6dcb8", "#0e1611"
 
+def hands(hid, color, sec_angle):
+    """Hour and minute hands are plain with lume; the seconds hand carries the brass flag near the center."""
+    return (f'<g id="{hid}"><g transform="rotate(305)"><rect x="-5" y="-56" width="10" height="60" rx="2" fill="{color}"/><rect x="-2" y="-50" width="4" height="40" fill="{LUME}"/></g>'
+            f'<g transform="rotate(63)"><rect x="-3" y="-90" width="6" height="94" rx="2" fill="{color}"/><rect x="-1.2" y="-82" width="2.4" height="66" fill="{LUME}"/></g>'
+            f'<g transform="rotate({sec_angle})"><rect x="-0.9" y="-94.5" width="1.8" height="116" fill="{color}"/><circle cx="0" cy="20" r="3" fill="{color}"/>'
+            f'<polygon points="0.9,-54 17,-48 0.9,-42" fill="{BRASS}"/></g><use href="#ball" transform="scale(0.86)"/></g>')
+
+
 DEFS = f"""<style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500&amp;family=Jost:wght@300;500&amp;display=swap');.fr{{font-family:Fraunces,Georgia,serif}}.jo{{font-family:Jost,Helvetica,sans-serif}}.jl{{font-family:Jost,Helvetica,sans-serif;font-weight:300}}</style>
 <defs>
 <clipPath id="fwclip"><circle r="117"/></clipPath>
 <g id="ball"><circle r="7" fill="#ffffff" stroke="#9a9a9a" stroke-width="0.5"/><circle cx="-2" cy="-2" r="0.9" fill="#c8c8c8"/><circle cx="2" cy="-2" r="0.9" fill="#c8c8c8"/><circle cx="0" cy="2" r="0.9" fill="#c8c8c8"/></g>
-<g id="handsL"><g transform="rotate(305)"><rect x="-5" y="-56" width="10" height="60" rx="2" fill="{CREAM}"/><rect x="-2" y="-50" width="4" height="40" fill="{LUME}"/></g><g transform="rotate(60)"><rect x="-1.5" y="-92" width="3" height="96" fill="{CREAM}"/><polygon points="1.5,-91 20,-85 1.5,-79" fill="{BRASS}"/></g><line x1="0" y1="20" x2="0" y2="-98" stroke="{BRASS}" stroke-width="1.5" transform="rotate(200)"/><use href="#ball"/></g>
-<g id="handsD"><g transform="rotate(305)"><rect x="-5" y="-56" width="10" height="60" rx="2" fill="{INK}"/><rect x="-2" y="-50" width="4" height="40" fill="{LUME}"/></g><g transform="rotate(60)"><rect x="-1.5" y="-92" width="3" height="96" fill="{INK}"/><polygon points="1.5,-91 20,-85 1.5,-79" fill="{BRASS}"/></g><line x1="0" y1="20" x2="0" y2="-98" stroke="{BRASS}" stroke-width="1.5" transform="rotate(200)"/><use href="#ball"/></g>
+{hands("handsL", CREAM, 200)}
+{hands("handsD", INK, 200)}
 <g id="sticks">{''.join(f'<rect x="-4" y="-107" width="8" height="21" rx="1" transform="rotate({a})"/>' for a in (30, 60, 120, 150, 210, 240, 300, 330))}</g>
 <g id="n4" class="fr" text-anchor="middle" style="font-size:28px"><text x="0" y="-70">12</text><text x="88" y="9">3</text><text x="0" y="96">6</text><text x="-88" y="9">9</text></g>
 <g id="n39" class="fr" text-anchor="middle" style="font-size:28px"><text x="88" y="9">3</text><text x="-88" y="9">9</text></g>
@@ -27,10 +35,10 @@ DEFS = f"""<style>@import url('https://fonts.googleapis.com/css2?family=Fraunces
 <path id="tee-big" d="M-7.5,-104 Q0,-99.5 7.5,-104 L6.4,-101 Q2.6,-99.6 2.3,-96 L1.5,-83 L0,-77 L-1.5,-83 L-2.3,-96 Q-2.6,-99.6 -6.4,-101 Z"/>
 <path id="tee-sm" d="M-5.5,-104 Q0,-100.8 5.5,-104 L4.7,-101.9 Q2,-100.9 1.7,-98.4 L1.1,-90 L0,-86 L-1.1,-90 L-1.7,-98.4 Q-2,-100.9 -4.7,-101.9 Z"/>
 <g id="tees"><use href="#tee-big" transform="translate(0 6)"/>{''.join(f'<use href="#tee-{"big" if a in (90, 270) else "sm"}" transform="rotate({a})"/>' for a in (30, 60, 90, 120, 150, 210, 240, 270, 300, 330))}</g>
-<g id="handsT"><g transform="rotate(305)"><rect x="-5" y="-56" width="10" height="60" rx="2" fill="{INK}"/><rect x="-2" y="-50" width="4" height="40" fill="{LUME}"/></g><g transform="rotate(63)"><rect x="-3" y="-90" width="6" height="94" rx="2" fill="{INK}"/><rect x="-1.2" y="-82" width="2.4" height="66" fill="{LUME}"/></g><g transform="rotate(180)"><rect x="-0.9" y="-94.5" width="1.8" height="116" fill="{INK}"/><circle cx="0" cy="20" r="3" fill="{INK}"/><polygon points="0.9,-54 17,-48 0.9,-42" fill="{BRASS}"/></g><use href="#ball" transform="scale(0.86)"/></g>
+{hands("handsT", INK, 180)}
 <g id="datewin"><rect x="71" y="-15" width="36" height="28" rx="2" fill="{RECESS}"/><rect x="73" y="-13" width="32" height="24" rx="1" fill="{CREAM}"/><text class="jo" x="89" y="6" text-anchor="middle" style="fill:{INK};font-size:18px">31</text></g>
 <g id="idx"><circle cx="36" cy="-62.35" r="5.5"/><circle cx="62.35" cy="-36" r="5.5"/><circle cx="62.35" cy="36" r="5.5"/><circle cx="36" cy="62.35" r="5.5"/><circle cx="-36" cy="62.35" r="5.5"/><circle cx="-62.35" cy="36" r="5.5"/><circle cx="-62.35" cy="-36" r="5.5"/><circle cx="-36" cy="-62.35" r="5.5"/><rect x="58" y="-4" width="20" height="8" rx="1"/><rect x="-78" y="-4" width="20" height="8" rx="1"/><rect x="-4" y="58" width="8" height="20" rx="1"/><polygon points="-10,-82 10,-82 0,-66"/></g>
-<g id="divehands"><g transform="rotate(305)"><rect x="-5.5" y="-46" width="11" height="50" rx="2" fill="{CREAM}"/><rect x="-2.5" y="-40" width="5" height="32" fill="{LUME}"/></g><g transform="rotate(60)"><rect x="-1.5" y="-80" width="3" height="84" fill="{CREAM}"/><polygon points="1.5,-79 18,-73.5 1.5,-68" fill="{BRASS}"/></g><g transform="rotate(200)"><line x1="0" y1="20" x2="0" y2="-86" stroke="{BRASS}" stroke-width="1.5"/><circle cx="0" cy="-60" r="4.5" fill="{BRASS}"/></g><use href="#ball"/></g>
+<g id="divehands"><g transform="rotate(305)"><rect x="-5.5" y="-46" width="11" height="50" rx="2" fill="{CREAM}"/><rect x="-2.5" y="-40" width="5" height="32" fill="{LUME}"/></g><g transform="rotate(60)"><rect x="-2.5" y="-80" width="5" height="84" rx="2" fill="{CREAM}"/><rect x="-1" y="-72" width="2" height="58" fill="{LUME}"/></g><g transform="rotate(200)"><rect x="-0.9" y="-86" width="1.8" height="106" fill="{CREAM}"/><circle cx="0" cy="20" r="3" fill="{CREAM}"/><polygon points="0.9,-50 15,-44.5 0.9,-39" fill="{BRASS}"/></g><use href="#ball" transform="scale(0.86)"/></g>
 </defs>"""
 
 
