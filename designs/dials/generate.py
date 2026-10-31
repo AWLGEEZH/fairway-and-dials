@@ -1,0 +1,187 @@
+"""Generate the Fairway & Dials dial concepts as SVG files.
+
+Run from the repo root:  python3 designs/dials/generate.py
+Writes one SVG per model and date option into designs/dials/links/ and
+designs/dials/clubhouse/, plus a contact sheet at designs/dials/collection-sheet.svg.
+Every dial is drawn around (0, 0) with a 117-unit dial radius, so all files share
+the same scale.
+"""
+from pathlib import Path
+
+OUT = Path(__file__).parent
+
+GREEN, BRASS, CREAM, INK, MUTED = "#1f4d36", "#b98a3f", "#f3efe4", "#1b2620", "#4a564f"
+LUME, RECESS = "#e6dcb8", "#0e1611"
+
+DEFS = f"""<style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500&amp;family=Jost:wght@500&amp;display=swap');.fr{{font-family:Fraunces,Georgia,serif}}.jo{{font-family:Jost,Helvetica,sans-serif}}</style>
+<defs>
+<clipPath id="fwclip"><circle r="117"/></clipPath>
+<g id="ball"><circle r="7" fill="#ffffff" stroke="#9a9a9a" stroke-width="0.5"/><circle cx="-2" cy="-2" r="0.9" fill="#c8c8c8"/><circle cx="2" cy="-2" r="0.9" fill="#c8c8c8"/><circle cx="0" cy="2" r="0.9" fill="#c8c8c8"/></g>
+<g id="handsL"><g transform="rotate(305)"><rect x="-5" y="-56" width="10" height="60" rx="2" fill="{CREAM}"/><rect x="-2" y="-50" width="4" height="40" fill="{LUME}"/></g><g transform="rotate(60)"><rect x="-1.5" y="-92" width="3" height="96" fill="{CREAM}"/><polygon points="1.5,-91 20,-85 1.5,-79" fill="{BRASS}"/></g><line x1="0" y1="20" x2="0" y2="-98" stroke="{BRASS}" stroke-width="1.5" transform="rotate(200)"/><use href="#ball"/></g>
+<g id="handsD"><g transform="rotate(305)"><rect x="-5" y="-56" width="10" height="60" rx="2" fill="{INK}"/><rect x="-2" y="-50" width="4" height="40" fill="{LUME}"/></g><g transform="rotate(60)"><rect x="-1.5" y="-92" width="3" height="96" fill="{INK}"/><polygon points="1.5,-91 20,-85 1.5,-79" fill="{BRASS}"/></g><line x1="0" y1="20" x2="0" y2="-98" stroke="{BRASS}" stroke-width="1.5" transform="rotate(200)"/><use href="#ball"/></g>
+<g id="sticks">{''.join(f'<rect x="-4" y="-107" width="8" height="21" rx="1" transform="rotate({a})"/>' for a in (30, 60, 120, 150, 210, 240, 300, 330))}</g>
+<g id="n4" class="fr" text-anchor="middle" style="font-size:28px"><text x="0" y="-70">12</text><text x="88" y="9">3</text><text x="0" y="96">6</text><text x="-88" y="9">9</text></g>
+<g id="n39" class="fr" text-anchor="middle" style="font-size:28px"><text x="88" y="9">3</text><text x="-88" y="9">9</text></g>
+<g id="n19" class="fr" text-anchor="middle" style="font-size:22px"><text x="41" y="-63">1</text><text x="71" y="-33">2</text><text x="88" y="9" style="font-size:28px">3</text><text x="71" y="49">4</text><text x="41" y="79">5</text><text x="0" y="96" style="font-size:28px">6</text><text x="-41" y="79">7</text><text x="-71" y="49">8</text><text x="-88" y="9" style="font-size:28px">9</text></g>
+<g id="n12"><use href="#n19"/><g class="fr" text-anchor="middle" style="font-size:22px"><text x="-71" y="-33">10</text><text x="-41" y="-63">11</text><text x="0" y="-70" style="font-size:28px">12</text></g></g>
+<g id="tees">{''.join(
+    (f'<g transform="rotate({a})"><rect x="-8" y="-104" width="16" height="4" rx="2"/><polygon points="-3,-100 3,-100 0.8,-78 -0.8,-78"/></g>' if a % 90 == 0 else
+     f'<g transform="rotate({a})"><rect x="-6" y="-104" width="12" height="3" rx="1.5"/><polygon points="-2,-101 2,-101 0.6,-86 -0.6,-86"/></g>')
+    for a in range(0, 360, 30))}</g>
+<g id="datewin"><rect x="71" y="-15" width="36" height="28" rx="2" fill="{RECESS}"/><rect x="73" y="-13" width="32" height="24" rx="1" fill="{CREAM}"/><text class="jo" x="89" y="6" text-anchor="middle" style="fill:{INK};font-size:18px">31</text></g>
+<g id="idx"><circle cx="36" cy="-62.35" r="5.5"/><circle cx="62.35" cy="-36" r="5.5"/><circle cx="62.35" cy="36" r="5.5"/><circle cx="36" cy="62.35" r="5.5"/><circle cx="-36" cy="62.35" r="5.5"/><circle cx="-62.35" cy="36" r="5.5"/><circle cx="-62.35" cy="-36" r="5.5"/><circle cx="-36" cy="-62.35" r="5.5"/><rect x="58" y="-4" width="20" height="8" rx="1"/><rect x="-78" y="-4" width="20" height="8" rx="1"/><rect x="-4" y="58" width="8" height="20" rx="1"/><polygon points="-10,-82 10,-82 0,-66"/></g>
+<g id="divehands"><g transform="rotate(305)"><rect x="-5.5" y="-46" width="11" height="50" rx="2" fill="{CREAM}"/><rect x="-2.5" y="-40" width="5" height="32" fill="{LUME}"/></g><g transform="rotate(60)"><rect x="-1.5" y="-80" width="3" height="84" fill="{CREAM}"/><polygon points="1.5,-79 18,-73.5 1.5,-68" fill="{BRASS}"/></g><g transform="rotate(200)"><line x1="0" y1="20" x2="0" y2="-86" stroke="{BRASS}" stroke-width="1.5"/><circle cx="0" cy="-60" r="4.5" fill="{BRASS}"/></g><use href="#ball"/></g>
+</defs>"""
+
+
+def case(dial_fill):
+    return f'<rect x="123" y="-9" width="13" height="18" rx="2" fill="#8a8a8a"/><circle r="126" fill="#a8a8a8"/><circle r="117" fill="{dial_fill}"/>'
+
+
+def track(color, r=110):
+    gap = 2 * 3.14159265 * r / 60 - 1
+    return f'<circle r="{r}" fill="none" stroke="{color}" stroke-width="5" stroke-dasharray="1 {gap:.2f}" stroke-dashoffset="0.5" transform="rotate(-90)"/>'
+
+
+def cut(ref, lume, recess=RECESS):
+    """A sandwich cutout: the recess wall, then the lume layer seen through it."""
+    return f'<use href="#{ref}" fill="{recess}" transform="translate(-1.5 -1.5)"/><use href="#{ref}" fill="{lume}"/>'
+
+
+def text_block(name, mono, name_c, auto_c, top=-36, y1=36, y2=54, size=18):
+    return (f'<text class="fr" x="0" y="{top}" text-anchor="middle" style="fill:{mono};font-size:{size}px">F<tspan style="fill:{BRASS}">&amp;</tspan>D</text>'
+            f'<text class="fr" x="0" y="{y1}" text-anchor="middle" style="fill:{name_c};font-size:{size}px">{name}</text>'
+            f'<text class="jo" x="0" y="{y2}" text-anchor="middle" style="fill:{auto_c};font-size:{size}px;letter-spacing:0.5px">AUTOMATIC</text>')
+
+
+# Links collection (field). Each returns (dial body, hands id).
+def bunker():
+    grooves = ''.join(f'<circle r="{r}"/>' for r in (22, 38, 54, 70, 86, 102))
+    return (case("#d8c296") + f'<g fill="none" stroke="#c4ab78" stroke-width="2">{grooves}</g>'
+            + cut("sticks", "#2f6b4a", "#6b5a3a") + cut("n4", "#2f6b4a", "#6b5a3a")
+            + text_block("Bunker", INK, INK, MUTED)), "handsD"
+
+
+def fairway_stripe():
+    stripes = ''.join(f'<rect x="{x}" y="-117" width="26" height="234" fill="{GREEN if i % 2 == 0 else "#2a6146"}"/>'
+                      for i, x in enumerate(range(-117, 117, 26)))
+    return ('<rect x="123" y="-9" width="13" height="18" rx="2" fill="#8a8a8a"/><circle r="126" fill="#a8a8a8"/>' + f'<g clip-path="url(#fwclip)">{stripes}</g>'
+            + cut("sticks", LUME) + cut("n4", LUME) + text_block("Fairway Stripe", CREAM, CREAM, BRASS)), "handsL"
+
+
+def pin_high():
+    flag_recess = f'<g fill="{RECESS}" transform="translate(-1.5 -1.5)"><rect x="-2.5" y="-106" width="5" height="40"/><polygon points="2.5,-106 26,-98 2.5,-90"/><ellipse cx="0" cy="84" rx="20" ry="8"/></g>'
+    flag = f'<g fill="{LUME}"><rect x="-1.5" y="-104.5" width="3" height="37"/><polygon points="1.5,-104.5 24,-97 1.5,-89.5" fill="{BRASS}"/><ellipse cx="0" cy="84" rx="18" ry="6.5"/></g>'
+    return (case(GREEN) + track(CREAM, 108) + cut("sticks", LUME) + flag_recess + flag + cut("n39", LUME)
+            + text_block("Pin High", CREAM, CREAM, BRASS)), "handsL"
+
+
+def tee_box():
+    return (case(CREAM) + track(GREEN) + cut("tees", GREEN, "#8a8170")
+            + text_block("Tee Box", GREEN, GREEN, MUTED)), "handsD"
+
+
+def caddie():
+    return (case(CREAM) + track(GREEN) + cut("n12", GREEN, "#8a8170")
+            + text_block("Caddie", GREEN, GREEN, MUTED)), "handsD"
+
+
+def dawn_patrol():
+    rail = (f'<circle r="112" fill="none" stroke="{CREAM}" stroke-width="0.8"/><circle r="104" fill="none" stroke="{CREAM}" stroke-width="0.8"/>'
+            f'<circle r="108" fill="none" stroke="{CREAM}" stroke-width="8" stroke-dasharray="0.8 10.51" stroke-dashoffset="0.4" transform="rotate(-90)"/>')
+    return (case(INK) + rail + cut("n12", "#e8c48a", "#0a0f0c")
+            + text_block("Dawn Patrol", CREAM, "#e8c48a", CREAM)), "handsL"
+
+
+def front_nine():
+    sticks = ('<rect x="-4" y="-107" width="8" height="24" transform="rotate(300)"/><rect x="-4" y="-107" width="8" height="24" transform="rotate(330)"/>'
+              '<rect x="-9" y="-107" width="7" height="28"/><rect x="2" y="-107" width="7" height="28"/>')
+    return (case(GREEN) + track(CREAM)
+            + f'<g fill="{RECESS}" transform="translate(-1.5 -1.5)">{sticks}</g><g fill="{LUME}">{sticks}</g>'
+            + cut("n19", LUME) + text_block("Front Nine", CREAM, CREAM, BRASS)), "handsL"
+
+
+# Clubhouse collection (diver).
+RING = [(0, -93), (33.2, -87.2), (62.4, -70.3), (84, -44.5), (95.5, -12.8), (95.5, 20.8), (84, 52.5), (62.4, 78.3), (33.2, 95.2),
+        (0, 101), (-33.2, 95.2), (-62.4, 78.3), (-84, 52.5), (-95.5, 20.8), (-95.5, -12.8), (-84, -44.5), (-62.4, -70.3), (-33.2, -87.2)]
+
+
+def water_hazard(date=False):
+    holes = ''.join(f'<text x="{x}" y="{y - 4}" dominant-baseline="central"{" fill=\"" + BRASS + "\"" if n == 1 else ""}>{n}</text>' for n, (x, y) in enumerate(RING, 1))
+    bezel = ''.join(f'<text x="{x}" y="{y}" dominant-baseline="central">{t}</text>' for t, x, y in
+                    (("20", 100.5, -58), ("40", 100.5, 58), ("60", 0, 116), ("80", -100.5, 58), ("100", -100.5, -58)))
+    date_win = (f'<rect x="54" y="-12" width="30" height="24" rx="2" fill="{RECESS}"/><rect x="56" y="-10" width="26" height="20" rx="1" fill="{CREAM}"/>'
+                f'<text class="jo" x="69" y="6" text-anchor="middle" style="fill:{INK};font-size:15px">31</text>') if date else ""
+    return ('<g fill="#8a8a8a"><rect x="0" y="-8" width="13" height="16" rx="2" transform="translate(116 -67) rotate(-30)"/>'
+            '<rect x="0" y="-8" width="13" height="16" rx="2" transform="translate(116 67) rotate(30)"/></g>'
+            f'<circle r="137" fill="#a8a8a8"/><circle r="131" fill="{GREEN}"/>'
+            f'<circle r="127" fill="none" stroke="{CREAM}" stroke-width="3" stroke-dasharray="1 5.65" stroke-dashoffset="0.5" transform="rotate(-90)"/>'
+            f'<polygon points="-8,-129 8,-129 0,-115" fill="{BRASS}"/>'
+            f'<g class="jo" text-anchor="middle" style="font-size:13px" fill="{CREAM}">{bezel}</g>'
+            f'<circle r="105.5" fill="{RECESS}"/><circle r="97" fill="none" stroke="{CREAM}" stroke-width="14"/>'
+            f'<g class="jo" text-anchor="middle" style="font-size:14px" fill="{INK}">{holes}</g>'
+            f'<circle r="90" fill="#123e52"/>'
+            f'<circle r="86" fill="none" stroke="{CREAM}" stroke-width="4" stroke-dasharray="0.8 8.2" stroke-dashoffset="0.4" transform="rotate(-90)"/>'
+            + cut("idx", LUME, "#0a0f0c") + date_win
+            + text_block("Water Hazard", CREAM, CREAM, BRASS, top=-38, y1=34, y2=50, size=14) + '<use href="#divehands"/>')
+
+
+LINKS = [("bunker", "Bunker", bunker), ("fairway-stripe", "Fairway Stripe", fairway_stripe), ("pin-high", "Pin High", pin_high),
+         ("tee-box", "Tee Box", tee_box), ("caddie", "Caddie", caddie), ("dawn-patrol", "Dawn Patrol", dawn_patrol),
+         ("front-nine", "Front Nine", front_nine)]
+
+
+def field_dial(fn, date):
+    body, hands = fn()
+    return body + ('<use href="#datewin"/>' if date else '') + f'<use href="#{hands}"/>'
+
+
+def standalone(body, title, half=145):
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{-half} {-half} {2 * half} {2 * half}" width="{4 * half}" height="{4 * half}">'
+            f'<title>{title}</title>{DEFS}{body}</svg>\n')
+
+
+def main():
+    files = []
+    for slug, name, fn in LINKS:
+        for date in (False, True):
+            path = OUT / "links" / f"{slug}-{'date' if date else 'no-date'}.svg"
+            path.parent.mkdir(exist_ok=True)
+            path.write_text(standalone(field_dial(fn, date), f"Fairway &amp; Dials Links {name}, {'date' if date else 'no date'}"))
+            files.append(path)
+    for date in (False, True):
+        path = OUT / "clubhouse" / f"water-hazard-{'date' if date else 'no-date'}.svg"
+        path.parent.mkdir(exist_ok=True)
+        path.write_text(standalone(water_hazard(date), f"Fairway &amp; Dials Water Hazard, {'date' if date else 'no date'}"))
+        files.append(path)
+
+    # Contact sheet: four columns (two models per row, no date then date).
+    W, cell_w, cell_h, s = 800, 200, 210, 0.62
+    parts = [f'<rect width="{W}" height="100%" fill="#faf8f2"/>',
+             f'<text class="fr" x="40" y="52" style="fill:{GREEN};font-size:30px">Fairway <tspan fill="{BRASS}">&amp;</tspan> Dials · dial concepts</text>',
+             f'<text class="jo" x="40" y="96" style="fill:{MUTED};font-size:13px;letter-spacing:2px">LINKS COLLECTION · FIELD</text>']
+    y0 = 110
+    for i, (slug, name, fn) in enumerate(LINKS):
+        row, pair = divmod(i, 2)
+        for date in (False, True):
+            col = pair * 2 + int(date)
+            cx, cy = 100 + col * cell_w, y0 + 95 + row * cell_h
+            parts.append(f'<g transform="translate({cx} {cy}) scale({s})">{field_dial(fn, date)}</g>')
+            parts.append(f'<text class="jo" x="{cx}" y="{cy + 100}" text-anchor="middle" style="fill:{INK};font-size:13px">{name} · {"date" if date else "no date"}</text>')
+    y1 = y0 + 4 * cell_h + 20
+    parts.append(f'<text class="jo" x="40" y="{y1}" style="fill:{MUTED};font-size:13px;letter-spacing:2px">CLUBHOUSE COLLECTION · DIVER</text>')
+    for k, date in enumerate((False, True)):
+        cx, cy = 200 + k * 400, y1 + 140
+        parts.append(f'<g transform="translate({cx} {cy}) scale(0.85)">{water_hazard(date)}</g>')
+        parts.append(f'<text class="jo" x="{cx}" y="{cy + 140}" text-anchor="middle" style="fill:{INK};font-size:13px">Water Hazard · {"date" if date else "no date"}</text>')
+    H = y1 + 310
+    sheet = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">'
+             f'<title>Fairway &amp; Dials dial concepts</title>{DEFS}{"".join(parts)}</svg>\n')
+    (OUT / "collection-sheet.svg").write_text(sheet)
+    files.append(OUT / "collection-sheet.svg")
+    for f in files:
+        print(f.relative_to(OUT.parent.parent))
+
+
+if __name__ == "__main__":
+    main()
