@@ -13,7 +13,7 @@ OUT = Path(__file__).parent
 GREEN, BRASS, CREAM, INK, MUTED = "#1f4d36", "#b98a3f", "#f3efe4", "#1b2620", "#4a564f"
 LUME, RECESS = "#e6dcb8", "#0e1611"
 
-DEFS = f"""<style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500&amp;family=Jost:wght@500&amp;display=swap');.fr{{font-family:Fraunces,Georgia,serif}}.jo{{font-family:Jost,Helvetica,sans-serif}}</style>
+DEFS = f"""<style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500&amp;family=Jost:wght@300;500&amp;display=swap');.fr{{font-family:Fraunces,Georgia,serif}}.jo{{font-family:Jost,Helvetica,sans-serif}}.jl{{font-family:Jost,Helvetica,sans-serif;font-weight:300}}</style>
 <defs>
 <clipPath id="fwclip"><circle r="117"/></clipPath>
 <g id="ball"><circle r="7" fill="#ffffff" stroke="#9a9a9a" stroke-width="0.5"/><circle cx="-2" cy="-2" r="0.9" fill="#c8c8c8"/><circle cx="2" cy="-2" r="0.9" fill="#c8c8c8"/><circle cx="0" cy="2" r="0.9" fill="#c8c8c8"/></g>
@@ -24,10 +24,10 @@ DEFS = f"""<style>@import url('https://fonts.googleapis.com/css2?family=Fraunces
 <g id="n39" class="fr" text-anchor="middle" style="font-size:28px"><text x="88" y="9">3</text><text x="-88" y="9">9</text></g>
 <g id="n19" class="fr" text-anchor="middle" style="font-size:22px"><text x="41" y="-63">1</text><text x="71" y="-33">2</text><text x="88" y="9" style="font-size:28px">3</text><text x="71" y="49">4</text><text x="41" y="79">5</text><text x="0" y="96" style="font-size:28px">6</text><text x="-41" y="79">7</text><text x="-71" y="49">8</text><text x="-88" y="9" style="font-size:28px">9</text></g>
 <g id="n12"><use href="#n19"/><g class="fr" text-anchor="middle" style="font-size:22px"><text x="-71" y="-33">10</text><text x="-41" y="-63">11</text><text x="0" y="-70" style="font-size:28px">12</text></g></g>
-<g id="tees">{''.join(
-    (f'<g transform="rotate({a})"><rect x="-8" y="-104" width="16" height="4" rx="2"/><polygon points="-3,-100 3,-100 0.8,-78 -0.8,-78"/></g>' if a % 90 == 0 else
-     f'<g transform="rotate({a})"><rect x="-6" y="-104" width="12" height="3" rx="1.5"/><polygon points="-2,-101 2,-101 0.6,-86 -0.6,-86"/></g>')
-    for a in range(0, 360, 30))}</g>
+<path id="tee-big" d="M-7.5,-104 Q0,-99.5 7.5,-104 L6.4,-101 Q2.6,-99.6 2.3,-96 L1.5,-83 L0,-77 L-1.5,-83 L-2.3,-96 Q-2.6,-99.6 -6.4,-101 Z"/>
+<path id="tee-sm" d="M-5.5,-104 Q0,-100.8 5.5,-104 L4.7,-101.9 Q2,-100.9 1.7,-98.4 L1.1,-90 L0,-86 L-1.1,-90 L-1.7,-98.4 Q-2,-100.9 -4.7,-101.9 Z"/>
+<g id="tees"><use href="#tee-big" transform="translate(0 6)"/>{''.join(f'<use href="#tee-{"big" if a in (90, 270) else "sm"}" transform="rotate({a})"/>' for a in (30, 60, 90, 120, 150, 210, 240, 270, 300, 330))}</g>
+<g id="handsT"><g transform="rotate(305)"><rect x="-5" y="-56" width="10" height="60" rx="2" fill="{INK}"/><rect x="-2" y="-50" width="4" height="40" fill="{LUME}"/></g><g transform="rotate(63)"><rect x="-3" y="-90" width="6" height="94" rx="2" fill="{INK}"/><rect x="-1.2" y="-82" width="2.4" height="66" fill="{LUME}"/></g><g transform="rotate(180)"><rect x="-0.9" y="-94.5" width="1.8" height="116" fill="{INK}"/><circle cx="0" cy="20" r="3" fill="{INK}"/><polygon points="0.9,-54 17,-48 0.9,-42" fill="{BRASS}"/></g><use href="#ball" transform="scale(0.86)"/></g>
 <g id="datewin"><rect x="71" y="-15" width="36" height="28" rx="2" fill="{RECESS}"/><rect x="73" y="-13" width="32" height="24" rx="1" fill="{CREAM}"/><text class="jo" x="89" y="6" text-anchor="middle" style="fill:{INK};font-size:18px">31</text></g>
 <g id="idx"><circle cx="36" cy="-62.35" r="5.5"/><circle cx="62.35" cy="-36" r="5.5"/><circle cx="62.35" cy="36" r="5.5"/><circle cx="36" cy="62.35" r="5.5"/><circle cx="-36" cy="62.35" r="5.5"/><circle cx="-62.35" cy="36" r="5.5"/><circle cx="-62.35" cy="-36" r="5.5"/><circle cx="-36" cy="-62.35" r="5.5"/><rect x="58" y="-4" width="20" height="8" rx="1"/><rect x="-78" y="-4" width="20" height="8" rx="1"/><rect x="-4" y="58" width="8" height="20" rx="1"/><polygon points="-10,-82 10,-82 0,-66"/></g>
 <g id="divehands"><g transform="rotate(305)"><rect x="-5.5" y="-46" width="11" height="50" rx="2" fill="{CREAM}"/><rect x="-2.5" y="-40" width="5" height="32" fill="{LUME}"/></g><g transform="rotate(60)"><rect x="-1.5" y="-80" width="3" height="84" fill="{CREAM}"/><polygon points="1.5,-79 18,-73.5 1.5,-68" fill="{BRASS}"/></g><g transform="rotate(200)"><line x1="0" y1="20" x2="0" y2="-86" stroke="{BRASS}" stroke-width="1.5"/><circle cx="0" cy="-60" r="4.5" fill="{BRASS}"/></g><use href="#ball"/></g>
@@ -48,10 +48,11 @@ def cut(ref, lume, recess=RECESS):
     return f'<use href="#{ref}" fill="{recess}" transform="translate(-1.5 -1.5)"/><use href="#{ref}" fill="{lume}"/>'
 
 
-def text_block(name, mono, name_c, auto_c, top=-36, y1=36, y2=54, size=18):
-    return (f'<text class="fr" x="0" y="{top}" text-anchor="middle" style="fill:{mono};font-size:{size}px">F<tspan style="fill:{BRASS}">&amp;</tspan>D</text>'
-            f'<text class="fr" x="0" y="{y1}" text-anchor="middle" style="fill:{name_c};font-size:{size}px">{name}</text>'
-            f'<text class="jo" x="0" y="{y2}" text-anchor="middle" style="fill:{auto_c};font-size:{size}px;letter-spacing:0.5px">AUTOMATIC</text>')
+def text_block(name, word_c, name_c, auto_c, top=-50, y1=-30, y2=66, wsize=14, nsize=17, asize=8.5):
+    """Wordmark under 12, model name beneath it, and a faint light-weight Automatic above 6."""
+    return (f'<text class="fr" x="0" y="{top}" text-anchor="middle" style="fill:{word_c};font-size:{wsize}px">Fairway <tspan style="fill:{BRASS}">&amp;</tspan> Dials</text>'
+            f'<text class="fr" x="0" y="{y1}" text-anchor="middle" style="fill:{name_c};font-size:{nsize}px">{name}</text>'
+            f'<text class="jl" x="0" y="{y2}" text-anchor="middle" style="fill:{auto_c};font-size:{asize}px;letter-spacing:1.6px">AUTOMATIC</text>')
 
 
 # Links collection (field). Each returns (dial body, hands id).
@@ -59,38 +60,44 @@ def bunker():
     grooves = ''.join(f'<circle r="{r}"/>' for r in (22, 38, 54, 70, 86, 102))
     return (case("#d8c296") + f'<g fill="none" stroke="#c4ab78" stroke-width="2">{grooves}</g>'
             + cut("sticks", "#2f6b4a", "#6b5a3a") + cut("n4", "#2f6b4a", "#6b5a3a")
-            + text_block("Bunker", INK, INK, MUTED)), "handsD"
+            + text_block("Bunker", INK, INK, "#8f7b55")), "handsD"
 
 
 def fairway_stripe():
     stripes = ''.join(f'<rect x="{x}" y="-117" width="26" height="234" fill="{GREEN if i % 2 == 0 else "#2a6146"}"/>'
                       for i, x in enumerate(range(-117, 117, 26)))
     return ('<rect x="123" y="-9" width="13" height="18" rx="2" fill="#8a8a8a"/><circle r="126" fill="#a8a8a8"/>' + f'<g clip-path="url(#fwclip)">{stripes}</g>'
-            + cut("sticks", LUME) + cut("n4", LUME) + text_block("Fairway Stripe", CREAM, CREAM, BRASS)), "handsL"
+            + cut("sticks", LUME) + cut("n4", LUME) + text_block("Fairway Stripe", CREAM, CREAM, "#9fb5a6")), "handsL"
 
 
 def pin_high():
     flag_recess = f'<g fill="{RECESS}" transform="translate(-1.5 -1.5)"><rect x="-2.5" y="-106" width="5" height="40"/><polygon points="2.5,-106 26,-98 2.5,-90"/><ellipse cx="0" cy="84" rx="20" ry="8"/></g>'
     flag = f'<g fill="{LUME}"><rect x="-1.5" y="-104.5" width="3" height="37"/><polygon points="1.5,-104.5 24,-97 1.5,-89.5" fill="{BRASS}"/><ellipse cx="0" cy="84" rx="18" ry="6.5"/></g>'
     return (case(GREEN) + track(CREAM, 108) + cut("sticks", LUME) + flag_recess + flag + cut("n39", LUME)
-            + text_block("Pin High", CREAM, CREAM, BRASS)), "handsL"
+            + text_block("Pin High", CREAM, CREAM, "#9fb5a6")), "handsL"
 
 
 def tee_box():
-    return (case(CREAM) + track(GREEN) + cut("tees", GREEN, "#8a8170")
-            + text_block("Tee Box", GREEN, GREEN, MUTED)), "handsD"
+    """Realistic tee markers, a ball on the 12 tee, and a printed cup at 6.
+    The seconds hand carries the flag; at :30 it stands in the cup."""
+    ball = ('<circle cx="0" cy="-103.2" r="5.2" fill="#ffffff" stroke="#9a9a9a" stroke-width="0.6"/>'
+            '<circle cx="-1.6" cy="-104.6" r="0.7" fill="#c8c8c8"/><circle cx="1.6" cy="-104.6" r="0.7" fill="#c8c8c8"/><circle cx="0" cy="-102" r="0.7" fill="#c8c8c8"/>')
+    cup = f'<ellipse cx="0" cy="92" rx="11" ry="4.5" fill="{GREEN}"/><ellipse cx="0" cy="92.6" rx="8.5" ry="3" fill="#0f1612"/>'
+    return (case(CREAM) + track(GREEN)
+            + f'<use href="#tees" fill="#8a8170" transform="translate(-1.2 -1.2)"/><use href="#tees" fill="{GREEN}"/>'
+            + ball + cup + text_block("Tee Box", GREEN, GREEN, "#a39a86")), "handsT"
 
 
 def caddie():
     return (case(CREAM) + track(GREEN) + cut("n12", GREEN, "#8a8170")
-            + text_block("Caddie", GREEN, GREEN, MUTED)), "handsD"
+            + text_block("Caddie", GREEN, GREEN, "#a39a86")), "handsD"
 
 
 def dawn_patrol():
     rail = (f'<circle r="112" fill="none" stroke="{CREAM}" stroke-width="0.8"/><circle r="104" fill="none" stroke="{CREAM}" stroke-width="0.8"/>'
             f'<circle r="108" fill="none" stroke="{CREAM}" stroke-width="8" stroke-dasharray="0.8 10.51" stroke-dashoffset="0.4" transform="rotate(-90)"/>')
     return (case(INK) + rail + cut("n12", "#e8c48a", "#0a0f0c")
-            + text_block("Dawn Patrol", CREAM, "#e8c48a", CREAM)), "handsL"
+            + text_block("Dawn Patrol", CREAM, "#e8c48a", "#8a948d")), "handsL"
 
 
 def front_nine():
@@ -98,7 +105,7 @@ def front_nine():
               '<rect x="-9" y="-107" width="7" height="28"/><rect x="2" y="-107" width="7" height="28"/>')
     return (case(GREEN) + track(CREAM)
             + f'<g fill="{RECESS}" transform="translate(-1.5 -1.5)">{sticks}</g><g fill="{LUME}">{sticks}</g>'
-            + cut("n19", LUME) + text_block("Front Nine", CREAM, CREAM, BRASS)), "handsL"
+            + cut("n19", LUME) + text_block("Front Nine", CREAM, CREAM, "#9fb5a6")), "handsL"
 
 
 # Clubhouse collection (diver).
@@ -123,7 +130,7 @@ def water_hazard(date=False):
             f'<circle r="90" fill="#123e52"/>'
             f'<circle r="86" fill="none" stroke="{CREAM}" stroke-width="4" stroke-dasharray="0.8 8.2" stroke-dashoffset="0.4" transform="rotate(-90)"/>'
             + cut("idx", LUME, "#0a0f0c") + date_win
-            + text_block("Water Hazard", CREAM, CREAM, BRASS, top=-38, y1=34, y2=50, size=14) + '<use href="#divehands"/>')
+            + text_block("Water Hazard", CREAM, CREAM, "#7f9aa6", top=-44, y1=-28, y2=48, wsize=11, nsize=13, asize=7) + '<use href="#divehands"/>')
 
 
 LINKS = [("bunker", "Bunker", bunker), ("fairway-stripe", "Fairway Stripe", fairway_stripe), ("pin-high", "Pin High", pin_high),

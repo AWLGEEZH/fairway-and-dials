@@ -20,15 +20,16 @@ Every model comes in a no-date version (NH38 movement) and a date version (NH35,
 ## Shared details
 
 - Sandwich construction: numerals and markers are cut through the top plate, with lume underneath.
-- F&D monogram under 12; model name and "Automatic" printed above 6.
-- Flagstick minute hand with a brass pennant, and a golf-ball center cap.
+- "Fairway & Dials" wordmark under 12, with the model name directly beneath it.
+- "Automatic" printed small and faint in light-weight Jost above 6.
+- Flagstick minute hand with a brass pennant, and a golf-ball center cap (Tee Box moves the flag to the seconds hand).
 
 ## Models
 
 - **Bunker:** sand dial with raked grooves, green lume.
 - **Fairway Stripe:** mowing stripes on the green dial.
 - **Pin High:** a flagstick cutout replaces the 12, and a cup replaces the 6.
-- **Tee Box:** cream dial, golf-tee hour markers.
+- **Tee Box:** the launch model. Cream dial with realistic golf-tee hour markers and a ball resting on the 12 tee. A printed cup replaces the 6. The seconds hand carries the brass flag, so every :30 it stands in the cup like a pin in the hole; hack the movement at :30 for product photos. Hour and minute hands are plain ink with lume.
 - **Caddie:** cream dial, full green Arabic numerals.
 - **Dawn Patrol:** ink dial, warm vintage lume, railroad track.
 - **Front Nine:** numerals for hours 1 to 9 only; 10, 11 and 12 are sticks.
