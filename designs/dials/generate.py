@@ -2,7 +2,7 @@
 
 Run from the repo root:  python3 designs/dials/generate.py
 Writes one SVG per model and date option into designs/dials/links/ and
-designs/dials/hazards/, plus a contact sheet at designs/dials/collection-sheet.svg.
+designs/dials/tool/, plus a contact sheet at designs/dials/collection-sheet.svg.
 Every dial is drawn around (0, 0) with a 117-unit dial radius, so all files share
 the same scale.
 """
@@ -142,12 +142,12 @@ def clubhouse():
             + text_block("Clubhouse", CREAM, BRASS, "#6f8a7b")), "handsC"
 
 
-# Hazards collection (diver).
+# Tool collection (diver). First model: Marker, with a stroke-counter bezel and a hole-counter inner ring.
 RING = [(0, -93), (33.2, -87.2), (62.4, -70.3), (84, -44.5), (95.5, -12.8), (95.5, 20.8), (84, 52.5), (62.4, 78.3), (33.2, 95.2),
         (0, 101), (-33.2, 95.2), (-62.4, 78.3), (-84, 52.5), (-95.5, 20.8), (-95.5, -12.8), (-84, -44.5), (-62.4, -70.3), (-33.2, -87.2)]
 
 
-def water_hazard(date=False):
+def marker(date=False):
     holes = ''.join(f'<text x="{x}" y="{y - 4}" dominant-baseline="central"{" fill=\"" + BRASS + "\"" if n == 1 else ""}>{n}</text>' for n, (x, y) in enumerate(RING, 1))
     bezel = ''.join(f'<text x="{x}" y="{y}" dominant-baseline="central">{t}</text>' for t, x, y in
                     (("20", 100.5, -58), ("40", 100.5, 58), ("60", 0, 116), ("80", -100.5, 58), ("100", -100.5, -58)))
@@ -164,7 +164,7 @@ def water_hazard(date=False):
             f'<circle r="90" fill="#123e52"/>'
             f'<circle r="86" fill="none" stroke="{CREAM}" stroke-width="4" stroke-dasharray="0.8 8.2" stroke-dashoffset="0.4" transform="rotate(-90)"/>'
             + cut("idx", LUME, "#0a0f0c") + date_win
-            + text_block("Water Hazard", CREAM, CREAM, "#7f9aa6", top=-44, y1=-28, y2=48, wsize=11, nsize=13, asize=7) + '<use href="#divehands"/>')
+            + text_block("Marker", CREAM, CREAM, "#7f9aa6", top=-44, y1=-28, y2=48, wsize=11, nsize=13, asize=7) + '<use href="#divehands"/>')
 
 
 LINKS = [("bunker", "Bunker", bunker), ("fairway-stripe", "Fairway Stripe", fairway_stripe), ("pin-high", "Pin High", pin_high),
@@ -191,9 +191,9 @@ def main():
             path.write_text(standalone(field_dial(fn, date), f"Fairway &amp; Dials Links {name}, {'date' if date else 'no date'}"))
             files.append(path)
     for date in (False, True):
-        path = OUT / "hazards" / f"water-hazard-{'date' if date else 'no-date'}.svg"
+        path = OUT / "tool" / f"marker-{'date' if date else 'no-date'}.svg"
         path.parent.mkdir(exist_ok=True)
-        path.write_text(standalone(water_hazard(date), f"Fairway &amp; Dials Water Hazard, {'date' if date else 'no date'}"))
+        path.write_text(standalone(marker(date), f"Fairway &amp; Dials Marker, {'date' if date else 'no date'}"))
         files.append(path)
 
     # Contact sheet: four columns (two models per row, no date then date).
@@ -210,11 +210,11 @@ def main():
             parts.append(f'<g transform="translate({cx} {cy}) scale({s})">{field_dial(fn, date)}</g>')
             parts.append(f'<text class="jo" x="{cx}" y="{cy + 100}" text-anchor="middle" style="fill:{INK};font-size:13px">{name} · {"date" if date else "no date"}</text>')
     y1 = y0 + 4 * cell_h + 20
-    parts.append(f'<text class="jo" x="40" y="{y1}" style="fill:{MUTED};font-size:13px;letter-spacing:2px">HAZARDS COLLECTION · DIVER</text>')
+    parts.append(f'<text class="jo" x="40" y="{y1}" style="fill:{MUTED};font-size:13px;letter-spacing:2px">TOOL COLLECTION · DIVER</text>')
     for k, date in enumerate((False, True)):
         cx, cy = 200 + k * 400, y1 + 140
-        parts.append(f'<g transform="translate({cx} {cy}) scale(0.85)">{water_hazard(date)}</g>')
-        parts.append(f'<text class="jo" x="{cx}" y="{cy + 140}" text-anchor="middle" style="fill:{INK};font-size:13px">Water Hazard · {"date" if date else "no date"}</text>')
+        parts.append(f'<g transform="translate({cx} {cy}) scale(0.85)">{marker(date)}</g>')
+        parts.append(f'<text class="jo" x="{cx}" y="{cy + 140}" text-anchor="middle" style="fill:{INK};font-size:13px">Marker · {"date" if date else "no date"}</text>')
     H = y1 + 310
     sheet = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">'
              f'<title>Fairway &amp; Dials dial concepts</title>{DEFS}{"".join(parts)}</svg>\n')
