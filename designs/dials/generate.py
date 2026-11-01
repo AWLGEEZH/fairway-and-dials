@@ -2,7 +2,7 @@
 
 Run from the repo root:  python3 designs/dials/generate.py
 Writes one SVG per model and date option into designs/dials/links/ and
-designs/dials/clubhouse/, plus a contact sheet at designs/dials/collection-sheet.svg.
+designs/dials/hazards/, plus a contact sheet at designs/dials/collection-sheet.svg.
 Every dial is drawn around (0, 0) with a 117-unit dial radius, so all files share
 the same scale.
 """
@@ -36,6 +36,7 @@ DEFS = f"""<style>@import url('https://fonts.googleapis.com/css2?family=Fraunces
 <path id="tee-sm" d="M-5.5,-104 Q0,-100.8 5.5,-104 L4.7,-101.9 Q2,-100.9 1.7,-98.4 L1.1,-90 L0,-86 L-1.1,-90 L-1.7,-98.4 Q-2,-100.9 -4.7,-101.9 Z"/>
 <g id="tees"><use href="#tee-big" transform="translate(0 6)"/>{''.join(f'<use href="#tee-{"big" if a in (90, 270) else "sm"}" transform="rotate({a})"/>' for a in (30, 60, 90, 120, 150, 210, 240, 270, 300, 330))}</g>
 {hands("handsT", INK, 180)}
+<g id="handsC"><g transform="rotate(305)"><polygon points="0,-60 5,-10 0,4 -5,-10" fill="{BRASS}"/><polygon points="0,-60 0,4 -5,-10" fill="#d6b06a"/></g><g transform="rotate(63)"><polygon points="0,-98 4,-12 0,4 -4,-12" fill="{BRASS}"/><polygon points="0,-98 0,4 -4,-12" fill="#d6b06a"/></g><g transform="rotate(200)"><rect x="-0.8" y="-96" width="1.6" height="116" fill="{CREAM}"/><circle cx="0" cy="20" r="3" fill="{CREAM}"/><polygon points="0.8,-54 17,-48 0.8,-42" fill="{BRASS}"/></g><use href="#ball" transform="scale(0.86)"/></g>
 <g id="datewin"><rect x="71" y="-15" width="36" height="28" rx="2" fill="{RECESS}"/><rect x="73" y="-13" width="32" height="24" rx="1" fill="{CREAM}"/><text class="jo" x="89" y="6" text-anchor="middle" style="fill:{INK};font-size:18px">31</text></g>
 <g id="idx"><circle cx="36" cy="-62.35" r="5.5"/><circle cx="62.35" cy="-36" r="5.5"/><circle cx="62.35" cy="36" r="5.5"/><circle cx="36" cy="62.35" r="5.5"/><circle cx="-36" cy="62.35" r="5.5"/><circle cx="-62.35" cy="36" r="5.5"/><circle cx="-62.35" cy="-36" r="5.5"/><circle cx="-36" cy="-62.35" r="5.5"/><rect x="58" y="-4" width="20" height="8" rx="1"/><rect x="-78" y="-4" width="20" height="8" rx="1"/><rect x="-4" y="58" width="8" height="20" rx="1"/><polygon points="-10,-82 10,-82 0,-66"/></g>
 <g id="divehands"><g transform="rotate(305)"><rect x="-5.5" y="-46" width="11" height="50" rx="2" fill="{CREAM}"/><rect x="-2.5" y="-40" width="5" height="32" fill="{LUME}"/></g><g transform="rotate(60)"><rect x="-2.5" y="-80" width="5" height="84" rx="2" fill="{CREAM}"/><rect x="-1" y="-72" width="2" height="58" fill="{LUME}"/></g><g transform="rotate(200)"><rect x="-0.9" y="-86" width="1.8" height="106" fill="{CREAM}"/><circle cx="0" cy="20" r="3" fill="{CREAM}"/><polygon points="0.9,-50 15,-44.5 0.9,-39" fill="{BRASS}"/></g><use href="#ball" transform="scale(0.86)"/></g>
@@ -109,14 +110,32 @@ def dawn_patrol():
 
 
 def front_nine():
-    sticks = ('<rect x="-4" y="-107" width="8" height="24" transform="rotate(300)"/><rect x="-4" y="-107" width="8" height="24" transform="rotate(330)"/>'
-              '<rect x="-9" y="-107" width="7" height="28"/><rect x="2" y="-107" width="7" height="28"/>')
-    return (case(GREEN) + track(CREAM)
-            + f'<g fill="{RECESS}" transform="translate(-1.5 -1.5)">{sticks}</g><g fill="{LUME}">{sticks}</g>'
-            + cut("n19", LUME) + text_block("Front Nine", CREAM, CREAM, "#9fb5a6")), "handsL"
+    return (case(GREEN) + track(CREAM) + cut("n12", LUME)
+            + text_block("Front Nine", CREAM, CREAM, "#9fb5a6")), "handsL"
 
 
-# Clubhouse collection (diver).
+def clubhouse():
+    """The 19th hole: a dressier finale. Applied brass batons instead of sandwich lume,
+    brass dauphine hands, and a tiny brass 19 in place of the 19th minute tick."""
+    import math
+    ticks = ''.join(
+        f'<line x1="{math.sin(math.radians(m * 6)) * 108:.2f}" y1="{-math.cos(math.radians(m * 6)) * 108:.2f}" '
+        f'x2="{math.sin(math.radians(m * 6)) * 112:.2f}" y2="{-math.cos(math.radians(m * 6)) * 112:.2f}"/>'
+        for m in range(60) if m != 19)
+    a = math.radians(19 * 6)
+    nineteen = (f'<text class="jo" x="{math.sin(a) * 110:.1f}" y="{-math.cos(a) * 110:.1f}" text-anchor="middle" '
+                f'dominant-baseline="central" style="fill:{BRASS};font-size:6.5px">19</text>')
+    baton = '<rect x="-3" y="-104" width="6" height="22" rx="0.8"/>'
+    batons = ''.join(f'<g transform="rotate({h * 30})">{baton}</g>' for h in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11))
+    double12 = '<rect x="-8" y="-104" width="5.5" height="24" rx="0.8"/><rect x="2.5" y="-104" width="5.5" height="24" rx="0.8"/>'
+    shine = ''.join(f'<g transform="rotate({h * 30})"><rect x="-0.6" y="-102" width="1.2" height="18" fill="#e3c27e"/></g>' for h in range(1, 12))
+    return (case("#16382a") + f'<g stroke="{BRASS}" stroke-width="0.9">{ticks}</g>' + nineteen
+            + f'<g fill="#0b1d15" transform="translate(1.2 1.2)">{batons}{double12}</g>'
+            + f'<g fill="{BRASS}">{batons}{double12}</g>' + shine
+            + text_block("Clubhouse", CREAM, BRASS, "#6f8a7b")), "handsC"
+
+
+# Hazards collection (diver).
 RING = [(0, -93), (33.2, -87.2), (62.4, -70.3), (84, -44.5), (95.5, -12.8), (95.5, 20.8), (84, 52.5), (62.4, 78.3), (33.2, 95.2),
         (0, 101), (-33.2, 95.2), (-62.4, 78.3), (-84, 52.5), (-95.5, 20.8), (-95.5, -12.8), (-84, -44.5), (-62.4, -70.3), (-33.2, -87.2)]
 
@@ -143,7 +162,7 @@ def water_hazard(date=False):
 
 LINKS = [("bunker", "Bunker", bunker), ("fairway-stripe", "Fairway Stripe", fairway_stripe), ("pin-high", "Pin High", pin_high),
          ("tee-box", "Tee Box", tee_box), ("caddie", "Caddie", caddie), ("dawn-patrol", "Dawn Patrol", dawn_patrol),
-         ("front-nine", "Front Nine", front_nine)]
+         ("front-nine", "Front Nine", front_nine), ("clubhouse", "Clubhouse", clubhouse)]
 
 
 def field_dial(fn, date):
@@ -165,7 +184,7 @@ def main():
             path.write_text(standalone(field_dial(fn, date), f"Fairway &amp; Dials Links {name}, {'date' if date else 'no date'}"))
             files.append(path)
     for date in (False, True):
-        path = OUT / "clubhouse" / f"water-hazard-{'date' if date else 'no-date'}.svg"
+        path = OUT / "hazards" / f"water-hazard-{'date' if date else 'no-date'}.svg"
         path.parent.mkdir(exist_ok=True)
         path.write_text(standalone(water_hazard(date), f"Fairway &amp; Dials Water Hazard, {'date' if date else 'no date'}"))
         files.append(path)
@@ -184,7 +203,7 @@ def main():
             parts.append(f'<g transform="translate({cx} {cy}) scale({s})">{field_dial(fn, date)}</g>')
             parts.append(f'<text class="jo" x="{cx}" y="{cy + 100}" text-anchor="middle" style="fill:{INK};font-size:13px">{name} · {"date" if date else "no date"}</text>')
     y1 = y0 + 4 * cell_h + 20
-    parts.append(f'<text class="jo" x="40" y="{y1}" style="fill:{MUTED};font-size:13px;letter-spacing:2px">CLUBHOUSE COLLECTION · DIVER</text>')
+    parts.append(f'<text class="jo" x="40" y="{y1}" style="fill:{MUTED};font-size:13px;letter-spacing:2px">HAZARDS COLLECTION · DIVER</text>')
     for k, date in enumerate((False, True)):
         cx, cy = 200 + k * 400, y1 + 140
         parts.append(f'<g transform="translate({cx} {cy}) scale(0.85)">{water_hazard(date)}</g>')
