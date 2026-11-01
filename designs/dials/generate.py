@@ -98,7 +98,11 @@ def tee_box():
 
 
 def caddie():
-    return (case(CREAM) + track(GREEN) + cut("n12", GREEN, "#8a8170")
+    """A faint tone-on-tone caddie bib printed behind the numerals, with a bib number."""
+    bib = ('<path d="M-40,-6 L-22,-12 Q0,10 22,-12 L40,-6 L36,22 Q30,30 34,40 L38,82 L-38,82 L-34,40 Q-30,30 -36,22 Z" '
+           'fill="#ebe3cf" stroke="#ddd3bb" stroke-width="0.8"/>'
+           '<text class="jo" x="0" y="42" text-anchor="middle" style="fill:#d8cdb2;font-size:34px">1</text>')
+    return (case(CREAM) + bib + track(GREEN) + cut("n12", GREEN, "#8a8170")
             + text_block("Caddie", GREEN, GREEN, "#a39a86")), "handsD"
 
 
@@ -110,7 +114,10 @@ def dawn_patrol():
 
 
 def front_nine():
-    return (case(GREEN) + track(CREAM) + cut("n12", LUME)
+    """Hours 1 to 9 (the front nine) are sandwich lume; 10, 11 and 12 are printed in brass."""
+    back = (f'<g class="fr" text-anchor="middle" style="font-size:22px" fill="{BRASS}">'
+            '<text x="-71" y="-33">10</text><text x="-41" y="-63">11</text><text x="0" y="-70" style="font-size:28px">12</text></g>')
+    return (case(GREEN) + track(CREAM) + cut("n19", LUME) + back
             + text_block("Front Nine", CREAM, CREAM, "#9fb5a6")), "handsL"
 
 
