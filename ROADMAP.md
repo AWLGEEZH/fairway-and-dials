@@ -35,5 +35,5 @@ These are the gates for Tee Box, tracked as GitHub issues:
 
 - **Tool collection:** Marker is the first model. Graphite is the collection's house color. "Water Hazard," "Out of Bounds" and "Rough" are name candidates for future Tool watches.
 - **Pro Shop:** the name for the store section of the site and for limited editions or custom-dial commissions, not a watch.
-- **Looper:** a candidate name for a limited Caddie edition.
+- **Looper:** the collector's limited edition of Caddie, with a yardage-book background print. It can drop as a numbered run once Caddie is established.
 - **Names:** every model name is a working title until a USPTO search in Class 14 clears it.

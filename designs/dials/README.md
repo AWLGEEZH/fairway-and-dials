@@ -12,7 +12,7 @@ python3 designs/dials/generate.py
 
 | Collection | Type | Models | Files |
 |---|---|---|---|
-| Links | Field, sandwich dial (Clubhouse uses applied indices) | Bunker, Fairway Stripe, Pin High, Tee Box, Caddie, Dawn Patrol, Front Nine, Clubhouse | `links/` |
+| Links | Field, sandwich dial (Clubhouse uses applied indices) | Bunker, Fairway Stripe, Pin High, Tee Box, Caddie, Dawn Patrol, Front Nine, Clubhouse; Looper (limited edition) | `links/` |
 | Tool | Diver, sandwich dial | Marker (stroke-counter bezel, hole-counter inner ring) | `tool/` |
 
 Every model comes in a no-date version (NH38 movement) and a date version (NH35, window at 3). Each file is named `<model>-no-date.svg` or `<model>-date.svg`.
@@ -30,7 +30,8 @@ Every model comes in a no-date version (NH38 movement) and a date version (NH35,
 - **Fairway Stripe:** mowing stripes on the green dial.
 - **Pin High:** a flagstick cutout replaces the 12, and a cup replaces the 6.
 - **Tee Box:** the launch model. Cream dial with realistic golf-tee hour markers and a ball resting on the 12 tee. A printed cup replaces the 6. Every :30 the flagged seconds hand stands in the cup like a pin in the hole; hack the movement at :30 for product photos.
-- **Caddie:** cream dial, full green Arabic numerals, with a faint tone-on-tone caddie bib (number 1) printed behind the center. The bib is a generic design; avoid any tournament-specific bib styling, which is trademarked.
+- **Caddie:** cream dial with green baton indices (double at 12, longer at 3, 6 and 9). A large tone-on-tone caddie bib fills the dial, with the wordmark across the chest and a big number 1 below. The bib is a generic design; avoid any tournament-specific bib styling, which is trademarked.
+- **Looper (limited edition):** the collector's version of Caddie, named for golf slang for a caddie. Same dial and indices, but the background print is a caddie's yardage book open to Hole 1: fairway outline, green, bunkers and dashed 100- and 150-yard lines.
 - **Dawn Patrol:** ink dial, warm vintage lume, railroad track.
 - **Front Nine:** green dial with all twelve Arabic numerals. Hours 1 to 9 (the front nine) are cream lume cutouts; 10, 11 and 12 are printed in brass.
 - **Clubhouse:** the 19th hole and the dressiest model, meant for after the round. Deep green dial with applied brass batons (double at 12), brass dauphine hands and a brass minute track. A tiny brass "19" replaces the 19th minute tick.

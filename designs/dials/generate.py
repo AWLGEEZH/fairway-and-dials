@@ -97,13 +97,42 @@ def tee_box():
             + ball + cup + text_block("Tee Box", GREEN, GREEN, "#a39a86")), "handsT"
 
 
+CADDIE_TONE, CADDIE_LINE, CADDIE_DEEP = "#e8dfc8", "#d6cab0", "#d0c3a4"
+
+
+def caddie_batons(fill, dx=0, dy=0):
+    """Sandwich baton indices, longer at 3, 6 and 9, with a double baton at 12."""
+    out = [f'<rect x="{-w / 2}" y="-106" width="{w}" height="{L}" rx="1" transform="translate({dx} {dy}) rotate({h * 30})"/>'
+           for h, (w, L) in ((h, (9, 26) if h in (3, 6, 9) else (7, 20)) for h in range(1, 12))]
+    out.append(f'<rect x="-9" y="-106" width="6.5" height="26" rx="1" transform="translate({dx} {dy})"/>'
+               f'<rect x="2.5" y="-106" width="6.5" height="26" rx="1" transform="translate({dx} {dy})"/>')
+    return f'<g fill="{fill}">{"".join(out)}</g>'
+
+
+def caddie_dial(background, name):
+    return (case(CREAM) + background + track(GREEN) + caddie_batons("#8a8170", -1.5, -1.5) + caddie_batons(GREEN)
+            + text_block(name, GREEN, GREEN, "#a39a86"))
+
+
 def caddie():
-    """A faint tone-on-tone caddie bib printed behind the numerals, with a bib number."""
-    bib = ('<path d="M-40,-6 L-22,-12 Q0,10 22,-12 L40,-6 L36,22 Q30,30 34,40 L38,82 L-38,82 L-34,40 Q-30,30 -36,22 Z" '
-           'fill="#ebe3cf" stroke="#ddd3bb" stroke-width="0.8"/>'
-           '<text class="jo" x="0" y="42" text-anchor="middle" style="fill:#d8cdb2;font-size:34px">1</text>')
-    return (case(CREAM) + bib + track(GREEN) + cut("n12", GREEN, "#8a8170")
-            + text_block("Caddie", GREEN, GREEN, "#a39a86")), "handsD"
+    """A large tone-on-tone caddie bib fills the dial, with the wordmark across the chest and a big number 1."""
+    bib = (f'<g clip-path="url(#fwclip)"><path transform="translate(0 -70) scale(1.9)" '
+           'd="M-40,-6 L-22,-12 Q0,10 22,-12 L40,-6 L36,22 Q30,30 34,40 L38,82 L-38,82 L-34,40 Q-30,30 -36,22 Z" '
+           f'fill="{CADDIE_TONE}" stroke="{CADDIE_LINE}" stroke-width="0.6"/></g>'
+           f'<text class="jo" x="0" y="62" text-anchor="middle" style="fill:{CADDIE_DEEP};font-size:62px">1</text>')
+    return caddie_dial(bib, "Caddie"), "handsD"
+
+
+def looper():
+    """Collector's limited edition of Caddie: a caddie's yardage book open to Hole 1, printed tone-on-tone."""
+    book = (f'<rect x="-56" y="-88" width="112" height="178" rx="7" fill="{CADDIE_TONE}" stroke="{CADDIE_LINE}" stroke-width="1"/>'
+            f'<g fill="none" stroke="{CADDIE_DEEP}" stroke-width="1.4">'
+            '<path d="M-22,80 C-34,44 6,24 -6,-8 C-14,-34 12,-50 6,-66"/><path d="M8,80 C2,46 34,24 22,-8 C14,-32 34,-50 26,-66"/>'
+            '<circle cx="14" cy="-72" r="15"/><path d="M-30,-40 q6,-8 12,0 q-6,6 -12,0"/><path d="M38,4 q7,-7 12,1 q-6,6 -12,-1"/>'
+            '<path d="M-40,20 Q8,8 50,22" stroke-dasharray="3 3"/><path d="M-40,-22 Q10,-34 50,-20" stroke-dasharray="3 3"/></g>'
+            f'<rect x="-11" y="82" width="12" height="5" fill="{CADDIE_DEEP}"/>'
+            f'<g class="jo" style="fill:{CADDIE_DEEP};font-size:9px"><text x="-50" y="18">150</text><text x="-50" y="-25">100</text><text x="-50" y="-76">HOLE 1</text></g>')
+    return caddie_dial(book, "Looper"), "handsD"
 
 
 def dawn_patrol():
@@ -169,7 +198,8 @@ def marker(date=False):
 
 LINKS = [("bunker", "Bunker", bunker), ("fairway-stripe", "Fairway Stripe", fairway_stripe), ("pin-high", "Pin High", pin_high),
          ("tee-box", "Tee Box", tee_box), ("caddie", "Caddie", caddie), ("dawn-patrol", "Dawn Patrol", dawn_patrol),
-         ("front-nine", "Front Nine", front_nine), ("clubhouse", "Clubhouse", clubhouse)]
+         ("front-nine", "Front Nine", front_nine), ("clubhouse", "Clubhouse", clubhouse),
+         ("looper", "Looper (limited)", looper)]
 
 
 def field_dial(fn, date):
@@ -209,7 +239,7 @@ def main():
             cx, cy = 100 + col * cell_w, y0 + 95 + row * cell_h
             parts.append(f'<g transform="translate({cx} {cy}) scale({s})">{field_dial(fn, date)}</g>')
             parts.append(f'<text class="jo" x="{cx}" y="{cy + 100}" text-anchor="middle" style="fill:{INK};font-size:13px">{name} · {"date" if date else "no date"}</text>')
-    y1 = y0 + 4 * cell_h + 20
+    y1 = y0 + ((len(LINKS) + 1) // 2) * cell_h + 20
     parts.append(f'<text class="jo" x="40" y="{y1}" style="fill:{MUTED};font-size:13px;letter-spacing:2px">TOOL COLLECTION · DIVER</text>')
     for k, date in enumerate((False, True)):
         cx, cy = 200 + k * 400, y1 + 140
