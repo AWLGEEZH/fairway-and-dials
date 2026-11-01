@@ -6,6 +6,7 @@ A curated shop for pre-owned golf clubs and mechanical watches. Live at https://
 
 - `PLAN.md`: the project plan by phase, plus a Decisions table. Read it at the start of a session.
 - `ROADMAP.md`: the watch release order (the product roadmap).
+- `PROTOTYPE-PLAN.md`: the Nov 2026–Jan 2027 milestones before ordering Tee Box prototypes (refs #19–#22).
 - `designs/dials/`: dial concepts for every watch model, built by `generate.py`.
 - GitHub issues on AWLGEEZH/fairway-and-dials: one issue per plan task, labeled `phase-0` to `phase-4`. Issues labeled `decision` need Doyle's call before building.
 - `site/`: the live site. Currently one static page (`index.html` + `badge.svg`), no build step.
