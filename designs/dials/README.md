@@ -34,7 +34,7 @@ Every model comes in a no-date version (NH38 movement) and a date version (NH35,
 - **Dawn Patrol:** ink dial, warm vintage lume, railroad track.
 - **Front Nine:** green dial with all twelve Arabic numerals. Hours 1 to 9 (the front nine) are cream lume cutouts; 10, 11 and 12 are printed in brass.
 - **Clubhouse:** the 19th hole and the dressiest model, meant for after the round. Deep green dial with applied brass batons (double at 12), brass dauphine hands and a brass minute track. A tiny brass "19" replaces the 19th minute tick.
-- **Marker:** the first Tool collection model, named for the golfer who keeps your score. Water-blue dial. The outer bezel counts strokes (120 clicks, marked every 20). The crown at 2 turns the inner ring for holes 1 to 18, starting with hole 1 at 12. The crown at 4 sets the time.
+- **Marker:** the first Tool collection model, named for the golfer who keeps your score. Graphite dial, the color of a scorecard pencil. The outer bezel counts strokes (120 clicks, marked every 20). The crown at 2 turns the inner ring for holes 1 to 18, starting with hole 1 at 12. The crown at 4 sets the time.
 
 ## Production notes
 

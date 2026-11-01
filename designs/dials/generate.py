@@ -161,10 +161,10 @@ def marker(date=False):
             f'<g class="jo" text-anchor="middle" style="font-size:13px" fill="{CREAM}">{bezel}</g>'
             f'<circle r="105.5" fill="{RECESS}"/><circle r="97" fill="none" stroke="{CREAM}" stroke-width="14"/>'
             f'<g class="jo" text-anchor="middle" style="font-size:14px" fill="{INK}">{holes}</g>'
-            f'<circle r="90" fill="#123e52"/>'
+            f'<circle r="90" fill="#3b4043"/>'
             f'<circle r="86" fill="none" stroke="{CREAM}" stroke-width="4" stroke-dasharray="0.8 8.2" stroke-dashoffset="0.4" transform="rotate(-90)"/>'
-            + cut("idx", LUME, "#0a0f0c") + date_win
-            + text_block("Marker", CREAM, CREAM, "#7f9aa6", top=-44, y1=-28, y2=48, wsize=11, nsize=13, asize=7) + '<use href="#divehands"/>')
+            + cut("idx", LUME, "#141618") + date_win
+            + text_block("Marker", CREAM, CREAM, "#8e9497", top=-44, y1=-28, y2=48, wsize=11, nsize=13, asize=7) + '<use href="#divehands"/>')
 
 
 LINKS = [("bunker", "Bunker", bunker), ("fairway-stripe", "Fairway Stripe", fairway_stripe), ("pin-high", "Pin High", pin_high),
