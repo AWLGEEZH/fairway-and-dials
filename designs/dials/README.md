@@ -40,4 +40,4 @@ Every model comes in a no-date version (NH38 movement) and a date version (NH35,
 
 - Names are working titles. Run a USPTO search in Class 14 before committing to any of them.
 - Thin Fraunces strokes (1, 4, 7) may be too fine to cut through a dial plate; a dial maker may thicken them.
-- Water Hazard needs a compressor-style case with a second crown for the inner ring.
+- Marker needs a compressor-style case with a second crown for the inner ring.
