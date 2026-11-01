@@ -5,6 +5,8 @@ A curated shop for pre-owned golf clubs and mechanical watches. Live at https://
 ## Where things are
 
 - `PLAN.md`: the project plan by phase, plus a Decisions table. Read it at the start of a session.
+- `ROADMAP.md`: the watch release order (the product roadmap).
+- `designs/dials/`: dial concepts for every watch model, built by `generate.py`.
 - GitHub issues on AWLGEEZH/fairway-and-dials: one issue per plan task, labeled `phase-0` to `phase-4`. Issues labeled `decision` need Doyle's call before building.
 - `site/`: the live site. Currently one static page (`index.html` + `badge.svg`), no build step.
 - `brand/`: logo source files.

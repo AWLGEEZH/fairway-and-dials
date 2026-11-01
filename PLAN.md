@@ -62,6 +62,7 @@ Goal: people can browse inventory on the site and buy.
 |---|---|
 | 2026-10 | Name: **Fairway & Dials** (spoken "Fairway and Dials"); domain `fairwayanddials.com` |
 | 2026-10 | Hosting: Vercel; code in this repo |
+| 2026-10 | Watch release order follows a round of golf, launching with Tee Box; see `ROADMAP.md` |
 | — | Checkout approach (Phase 2) |
 
 ## Open questions
