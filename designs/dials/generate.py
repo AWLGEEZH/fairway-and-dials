@@ -220,6 +220,17 @@ def main():
              f'<title>Fairway &amp; Dials dial concepts</title>{DEFS}{"".join(parts)}</svg>\n')
     (OUT / "collection-sheet.svg").write_text(sheet)
     files.append(OUT / "collection-sheet.svg")
+
+    # Large side-by-side of the launch model, no date and date.
+    parts = ['<rect width="1200" height="680" fill="#faf8f2"/>']
+    for k, (date, label) in enumerate(((False, "Tee Box · no date"), (True, "Tee Box · date"))):
+        cx = 300 + k * 600
+        parts.append(f'<g transform="translate({cx} 315) scale(2.05)">{field_dial(tee_box, date)}</g>')
+        parts.append(f'<text class="jo" x="{cx}" y="650" text-anchor="middle" style="fill:{INK};font-size:22px">{label}</text>')
+    pair = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="1200" height="680">'
+            f'<title>Fairway &amp; Dials Tee Box, no date and date</title>{DEFS}{"".join(parts)}</svg>\n')
+    (OUT / "tee-box-side-by-side.svg").write_text(pair)
+    files.append(OUT / "tee-box-side-by-side.svg")
     for f in files:
         print(f.relative_to(OUT.parent.parent))
 

@@ -2,7 +2,7 @@
 
 Concept dials for Fairway & Dials watches, in the brand palette and fonts. These are design studies for prototyping (issue #19), not production artwork.
 
-`collection-sheet.svg` shows every dial on one page. To change a design, edit `generate.py` and run it from the repo root:
+`collection-sheet.svg` shows every dial on one page. `tee-box-side-by-side.svg` shows the launch model large, no date next to date. To change a design, edit `generate.py` and run it from the repo root:
 
 ```
 python3 designs/dials/generate.py
