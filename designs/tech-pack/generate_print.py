@@ -160,34 +160,56 @@ def build(date, flat):
             f'{title}{layers}{layer("guides", "9 GUIDES (do not print)", guides)}</svg>\n')
 
 
+HANDS = (  # reference hand set at 10:10:30, matching designs/dials (seconds flag standing in the cup)
+    '<g transform="rotate(305)"><rect x="-5" y="-56" width="10" height="60" rx="2" fill="#1b2620"/><rect x="-2" y="-50" width="4" height="40" fill="#e6dcb8"/></g>'
+    '<g transform="rotate(63)"><rect x="-3" y="-90" width="6" height="94" rx="2" fill="#1b2620"/><rect x="-1.2" y="-82" width="2.4" height="66" fill="#e6dcb8"/></g>'
+    '<g transform="rotate(180)"><rect x="-0.9" y="-94.5" width="1.8" height="116" fill="#1b2620"/><circle cx="0" cy="20" r="3" fill="#1b2620"/>'
+    '<polygon points="0.9,-54 17,-48 0.9,-42" fill="#b98a3f"/></g>'
+    '<circle r="6" fill="#ffffff" stroke="#9a9a9a" stroke-width="0.5"/>'
+    '<circle cx="-1.8" cy="-1.8" r="0.8" fill="#c8c8c8"/><circle cx="1.8" cy="-1.8" r="0.8" fill="#c8c8c8"/><circle cx="0" cy="1.8" r="0.8" fill="#c8c8c8"/>')
+
+
+def svg_inner(svg, suffix):
+    inner = svg[svg.index(">", svg.index("<svg")) + 1: svg.rindex("</svg>")]
+    return inner.replace('style="display:none"', "").replace(' id="', f' id="{suffix}-')
+
+
 def proof():
-    """Both sandwich variants enlarged, with layer legend and production notes."""
-    parts = ['<rect width="1600" height="1000" fill="#faf8f2"/>',
+    """Top: how the finished dial will look. Bottom: the production layers the factory works from."""
+    sans = 'font-family="Helvetica, Arial, sans-serif"'
+    parts = ['<rect width="1600" height="1560" fill="#faf8f2"/>',
              '<text x="60" y="80" font-family="Georgia, serif" font-size="40" fill="#1f4d36">Tee Box dial · print proof</text>',
-             '<text x="60" y="122" font-family="Helvetica, Arial, sans-serif" font-size="20" fill="#4a564f">Fairway &amp; Dials · 28.5 mm · sandwich construction · shown 10× true size</text>']
+             f'<text x="60" y="122" {sans} font-size="20" fill="#4a564f">Fairway &amp; Dials · 28.5 mm · sandwich construction</text>',
+             f'<text x="60" y="200" {sans} font-size="22" font-weight="bold" fill="#1b2620">1 · Finished dial</text>',
+             f'<text x="60" y="230" {sans} font-size="18" fill="#4a564f">How the dial will look in the watch. Hands are shown for reference at 10:10:30, with the seconds flag in the cup.</text>']
     for k, date in enumerate((False, True)):
-        svg = build(date, flat=False)
-        inner = svg[svg.index(">", svg.index("<svg")) + 1: svg.rindex("</svg>")].replace('style="display:none"', "")
-        inner = inner.replace(f'id="lower"', 'id="lower-p"')
-        cx = 330 + k * 560
-        parts.append(f'<g transform="translate({cx} 470) scale(1.82)">{inner}</g>')
-        parts.append(f'<text x="{cx}" y="770" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="24" fill="#1b2620">{"Date · NH35" if date else "No date · NH38"}</text>')
-    y = 200
-    parts.append('<text x="1190" y="180" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="bold" fill="#1b2620">Layers</text>')
+        cx = 420 + k * 760
+        parts.append(f'<g transform="translate({cx} 520) scale(1.95)">'
+                     '<rect x="123" y="-9" width="13" height="18" rx="2" fill="#8a8a8a"/><circle r="126" fill="#a8a8a8"/>'
+                     f'{svg_inner(build(date, flat=True), f"f{k}")}{HANDS}</g>')
+        parts.append(f'<text x="{cx}" y="800" text-anchor="middle" {sans} font-size="24" fill="#1b2620">{"Date · NH35" if date else "No date · NH38"}</text>')
+
+    parts += ['<line x1="60" y1="860" x2="1540" y2="860" stroke="#d6cab0" stroke-width="2"/>',
+              f'<text x="60" y="920" {sans} font-size="22" font-weight="bold" fill="#1b2620">2 · Production layers (for the dial factory)</text>',
+              f'<text x="60" y="950" {sans} font-size="18" fill="#4a564f">Technical view, not a color render. Magenta marks where the top plate is cut through; on the finished dial the green lower plate shows through.</text>']
+    for k, date in enumerate((False, True)):
+        cx = 260 + k * 470
+        parts.append(f'<g transform="translate({cx} 1220) scale(1.45)">{svg_inner(build(date, flat=False), f"s{k}")}</g>')
+        parts.append(f'<text x="{cx}" y="1460" text-anchor="middle" {sans} font-size="22" fill="#1b2620">{"Date · NH35" if date else "No date · NH38"}</text>')
+    y = 1010
     legend = [(INK["base"][0], "Top plate base"), (CUT, "Cut through top plate"), (INK["lower"][0], "Lower plate (through cuts)"),
               (INK["green"][0], "Print: green"), (INK["brass"][0], "Print: brass"), (INK["ink"][0], "Print: ink"),
               (INK["white"][0], "Print: white"), (INK["gray"][0], "Print: warm gray"), (GUIDE, "Guides, not printed")]
     for col, lab in legend:
         y += 38
-        parts.append(f'<rect x="1190" y="{y - 22}" width="28" height="28" rx="4" fill="{col}" stroke="#b5ad98" stroke-width="1"/>'
-                     f'<text x="1232" y="{y - 1}" font-family="Helvetica, Arial, sans-serif" font-size="19" fill="#1b2620">{lab}</text>')
-    notes = ["Proof shows the cut layer in magenta; on the dial the", "green lower plate shows through each tee.",
-             "Text is outlined. Colors are screen references:", "match to physical swatches before printing.",
-             "Date window position to be confirmed against", "the NH35 date wheel."]
+        parts.append(f'<rect x="1080" y="{y - 22}" width="28" height="28" rx="4" fill="{col}" stroke="#b5ad98" stroke-width="1"/>'
+                     f'<text x="1122" y="{y - 1}" {sans} font-size="19" fill="#1b2620">{lab}</text>')
+    notes = ["Text is outlined. Colors are screen references:", "match to physical swatches before printing.",
+             "Date window position to be confirmed", "against the NH35 date wheel."]
     for i, n in enumerate(notes):
-        parts.append(f'<text x="1190" y="{620 + i * 30}" font-family="Helvetica, Arial, sans-serif" font-size="17" fill="#4a564f">{n}</text>')
+        parts.append(f'<text x="1080" y="{1400 + i * 28}" {sans} font-size="17" fill="#4a564f">{n}</text>')
     return ('<svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" '
-            f'viewBox="0 0 1600 1000" width="1600" height="1000"><title>Tee Box dial print proof</title>{"".join(parts)}</svg>\n')
+            f'viewBox="0 0 1600 1560" width="1600" height="1560"><title>Tee Box dial print proof</title>{"".join(parts)}</svg>\n')
 
 
 SPEC_CSS = """
