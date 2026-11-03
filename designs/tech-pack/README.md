@@ -4,7 +4,7 @@ Production files for suppliers. Each watch gets its own folder; Tee Box is first
 
 - `tee-box/SPEC.md` and `SPEC.pdf`: the supplier specification and quote request, with the print proof.
 - `tee-box/*-sandwich.pdf|svg`: layered factory artwork, one layer per print color plus the cut layer.
-- `tee-box/*-flat.pdf|svg`: a single flattened image exactly 28.5 mm wide, for printing onto a blank dial.
+- `tee-box/*-flat.pdf|svg|png`: a single flattened image exactly 28.5 mm wide, for printing onto a blank dial. The PNG is 2400 px across, for services that ask for an image.
 - `generate_print.py`: rebuilds every file above. Run `python3 designs/tech-pack/generate_print.py` from the repo root. The SPEC.pdf step needs the Python `markdown` and `playwright` packages.
 - `fonts/`: Fraunces and Jost (SIL Open Font License), used to convert dial text to outlines.
 
@@ -20,5 +20,7 @@ A mule is a prototype watch for checking the design at real size and taking phot
    - A local pad or UV printer in Seattle, if one will take a 28.5 mm part.
 
    For the date mule, ask for a blank dial with a date window at 3 and check the window lines up with the artwork.
+
+   Ask for **full-color UV printing**. Laser marking and etching only produce one tone, which cannot reproduce the green, brass, white and gray of Tee Box. UV printers cannot print true metallics, so the brass ampersand will come out as a flat gold-tan.
 
 These print everything flat, so the tees are printed rather than cut through. That is fine for a mule. The real sandwich construction needs a dial factory: send the **sandwich** files and `SPEC.pdf` to the shortlist in M6, for example suppliers found through [Alibaba](https://www.alibaba.com/price-comparison/custom-dial-nh35-distributor) or a microbrand sourcing agent.

@@ -5,7 +5,7 @@ Run from the repo root:  python3 designs/tech-pack/generate_print.py
 Writes to designs/tech-pack/tee-box/:
   tee-box-<variant>-sandwich.svg / .pdf   Layered file for a dial factory. One layer per
                                           print color, plus the cut layer and guides.
-  tee-box-<variant>-flat.svg / .pdf       Single flattened image for a one-off "mule"
+  tee-box-<variant>-flat.svg / .pdf / .png  Single flattened image for a one-off "mule"
                                           print on a blank dial (no cutouts).
   proof.svg                               Enlarged proof of both variants with the layer legend.
 
@@ -264,6 +264,8 @@ def main():
             svg = OUT / f"{name}.svg"
             svg.write_text(build(date, flat))
             subprocess.run(["rsvg-convert", "-f", "pdf", "-o", str(OUT / f"{name}.pdf"), str(svg)], check=True)
+            if flat:  # PNG for small print services: 2400 px across 28.5 mm, about 2,100 dpi
+                subprocess.run(["rsvg-convert", "-w", "2400", "-o", str(OUT / f"{name}.png"), str(svg)], check=True)
             print(svg.relative_to(HERE.parent.parent), "+ .pdf")
     (OUT / "proof.svg").write_text(proof())
     print((OUT / "proof.svg").relative_to(HERE.parent.parent))
