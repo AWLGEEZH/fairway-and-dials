@@ -69,7 +69,7 @@ Go if all three hold:
 2. Waitlist shows real interest (signups plus comment quality).
 3. Unit cost at 100 supports a $450–650 price with 35–40% net after fees, shipping, and warranty.
 
-If go: place the sample PO, open a `prototype` label in issues, and write the reviewer outreach list (Seattle first: Zinski, Two Broke Watch Snobs; then two or three mid-size YouTube channels).
+If go: continue with `PRODUCTION-PLAN.md`. Place the sample PO, open a `prototype` label in issues, and write the reviewer outreach list (Seattle first: Zinski, Two Broke Watch Snobs; then two or three mid-size YouTube channels).
 
 If no-go: record why in `PLAN.md` and decide whether the fix is price, design, or audience.
 
