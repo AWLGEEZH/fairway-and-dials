@@ -5,6 +5,7 @@ Production files for suppliers. Each watch gets its own folder; Tee Box is first
 - `tee-box/SPEC.md` and `SPEC.pdf`: the supplier specification and quote request, with the print proof.
 - `tee-box/*-sandwich.pdf|svg`: layered factory artwork, one layer per print color plus the cut layer.
 - `tee-box/*-flat.pdf|svg|png`: a single flattened image exactly 28.5 mm wide, for printing onto a blank dial. The PNG is 2400 px across, for services that ask for an image.
+- `tee-box/seconds-flag-template.pdf|svg`: true-size guide for the mule's flagged seconds hand: flags to cut, the trim length (11.5 mm) and where the flag sits.
 - `generate_print.py`: rebuilds every file above. Run `python3 designs/tech-pack/generate_print.py` from the repo root. The SPEC.pdf step needs the Python `markdown` and `playwright` packages.
 - `fonts/`: Fraunces and Jost (SIL Open Font License), used to convert dial text to outlines.
 

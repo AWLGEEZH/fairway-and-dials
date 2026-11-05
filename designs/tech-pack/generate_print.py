@@ -256,6 +256,40 @@ def spec_pdf():
     print((OUT / "SPEC.pdf").relative_to(HERE.parent.parent))
 
 
+def flag_template():
+    """True-size cutting and placement guide for the mule's flagged seconds hand."""
+    sans = 'font-family="Helvetica, Arial, sans-serif"'
+    flag_l, flag_h = 16.1 * MM, 12 * MM          # pennant size in mm (from the design)
+    start, end, tip = 42 * MM, 54 * MM, 94.5 * MM  # pennant start/end and hand tip, mm from centre
+    p = ['<rect width="100" height="70" fill="#ffffff"/>',
+         f'<text x="6" y="8" {sans} font-size="4" fill="#1b2620">Tee Box seconds hand: flag template (print at 100%)</text>',
+         f'<text x="6" y="13" {sans} font-size="2.4" fill="#4a564f">Check scale: the bar below must measure 50 mm. All sizes in mm.</text>',
+         '<rect x="6" y="15" width="50" height="1" fill="#1b2620"/>']
+    p.append(f'<text x="6" y="24" {sans} font-size="2.8" fill="#1b2620">1. Flags to cut ({flag_l:.2f} × {flag_h:.2f} mm). Cut on the outer edge of the line.</text>')
+    for i in range(6):
+        x = 8 + i * 14
+        p.append(f'<polygon points="{x},27 {x + flag_l:.3f},{27 + flag_h / 2:.3f} {x},{27 + flag_h:.3f}" fill="#b98a3f" stroke="#1b2620" stroke-width="0.05"/>')
+    p.append(f'<text x="6" y="38" {sans} font-size="2.8" fill="#1b2620">2. Lay the hand on this ruler with its hole on the circle.</text>')
+    y, x0 = 50, 10
+    p.append(f'<circle cx="{x0}" cy="{y}" r="0.6" fill="none" stroke="#1b2620" stroke-width="0.1"/>')
+    p.append(f'<line x1="{x0}" y1="{y}" x2="{x0 + 14}" y2="{y}" stroke="#4a564f" stroke-width="0.08"/>')
+    for mm_ in range(0, 15):
+        h = 1.6 if mm_ % 5 == 0 else 0.8
+        p.append(f'<line x1="{x0 + mm_}" y1="{y - h}" x2="{x0 + mm_}" y2="{y}" stroke="#4a564f" stroke-width="0.06"/>')
+        if mm_ % 5 == 0:
+            p.append(f'<text x="{x0 + mm_}" y="{y - 2}" {sans} font-size="1.6" text-anchor="middle" fill="#4a564f">{mm_}</text>')
+    p.append(f'<polygon points="{x0 + start:.3f},{y + 0.4} {x0 + end:.3f},{y + 0.4} {x0 + (start + end) / 2:.3f},{y + 0.4 + flag_l:.3f}" fill="#b98a3f" opacity="0.8"/>')
+    p.append(f'<line x1="{x0 + tip:.3f}" y1="{y - 3}" x2="{x0 + tip:.3f}" y2="{y + 3}" stroke="#e4007c" stroke-width="0.12"/>')
+    p.append(f'<text x="{x0 + tip + 0.8:.3f}" y="{y + 3}" {sans} font-size="2" fill="#e4007c">trim tip here: {tip:.1f} mm</text>')
+    notes = [f"Flag sits {start:.1f}–{end:.1f} mm from the centre, on the right of the hand when it points to 12.",
+             "Trim the tip with a fine file, re-measure with calipers, touch up the end with black paint.",
+             "Keep the flag light: vinyl or foil, the smallest dot of glue. At :30 the tip should sit in the cup."]
+    for i, n in enumerate(notes):
+        p.append(f'<text x="6" y="{59 + i * 3.6}" {sans} font-size="2.3" fill="#4a564f">{n}</text>')
+    return ('<svg xmlns="http://www.w3.org/2000/svg" width="100mm" height="70mm" viewBox="0 0 100 70">'
+            f'<title>Tee Box seconds hand flag template</title>{"".join(p)}</svg>\n')
+
+
 def main():
     OUT.mkdir(exist_ok=True)
     for date in (False, True):
@@ -268,6 +302,8 @@ def main():
                 subprocess.run(["rsvg-convert", "-w", "2400", "-o", str(OUT / f"{name}.png"), str(svg)], check=True)
             print(svg.relative_to(HERE.parent.parent), "+ .pdf")
     (OUT / "proof.svg").write_text(proof())
+    (OUT / "seconds-flag-template.svg").write_text(flag_template())
+    subprocess.run(["rsvg-convert", "-f", "pdf", "-o", str(OUT / "seconds-flag-template.pdf"), str(OUT / "seconds-flag-template.svg")], check=True)
     print((OUT / "proof.svg").relative_to(HERE.parent.parent))
     spec_pdf()
 
