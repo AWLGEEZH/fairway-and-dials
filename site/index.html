@@ -74,6 +74,26 @@
   .btn.secondary { color: var(--green); }
   .btn.secondary:hover { background: #e6e0cf; }
   .btn:focus-visible { outline: 3px solid var(--brass); outline-offset: 3px; }
+  button.btn { font-family: inherit; cursor: pointer; }
+  button.btn:disabled { opacity: 0.6; cursor: wait; }
+  .waitlist { width: 100%; max-width: 30em; display: flex; flex-direction: column; gap: 10px; }
+  .waitlist label { font-size: 16px; font-weight: 500; color: var(--ink); }
+  .waitlist .row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .waitlist input[type=email] {
+    flex: 1 1 220px;
+    min-height: 48px;
+    padding: 0 18px;
+    border: 1px solid #8f9a93;
+    border-radius: 24px;
+    background: #fffdf8;
+    color: var(--ink);
+    font: inherit;
+    font-size: 16px;
+  }
+  .waitlist input[type=email]:focus-visible { outline: 3px solid var(--brass); outline-offset: 2px; border-color: var(--green); }
+  .waitlist .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .status { min-height: 1.5em; margin: 0; font-size: 16px; color: var(--green); }
+  .status.error { color: #9b2c1c; }
   footer { padding: 24px 20px; text-align: center; font-size: 14px; color: var(--muted); }
 </style>
 </head>
@@ -84,11 +104,50 @@
   <hr class="rule">
   <p class="tag">Golf clubs · Timepieces</p>
   <p class="pitch">Hand-picked pre-owned clubs and mechanical watches, for people who play on Saturday and wear something mechanical doing it. Opening soon.</p>
+  <form class="waitlist" id="waitlist" novalidate>
+    <label for="wl-email">Get first look when we open</label>
+    <div class="row">
+      <input id="wl-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required aria-describedby="wl-status">
+      <button class="btn primary" type="submit">Join the list</button>
+    </div>
+    <div class="hp" aria-hidden="true"><label for="wl-company">Company</label><input id="wl-company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+    <p class="status" id="wl-status" role="status" aria-live="polite"></p>
+  </form>
   <div class="links">
-    <a class="btn primary" href="https://www.instagram.com/fairwayanddials/">Follow on Instagram</a>
+    <a class="btn secondary" href="https://www.instagram.com/fairwayanddials/">Follow on Instagram</a>
     <a class="btn secondary" href="mailto:hello@fairwayanddials.com">hello@fairwayanddials.com</a>
   </div>
 </main>
 <footer>© 2026 Fairway &amp; Dials · Seattle</footer>
+<script>
+(function () {
+  var API = 'https://dmtupckcfwbvrkocosjg.supabase.co/rest/v1/waitlist';
+  var KEY = 'sb_publishable_gTo3eBcpR79hjgFXTcdieA_ocr3WIvy'; // public key; the table only allows inserts
+  var form = document.getElementById('waitlist');
+  var input = document.getElementById('wl-email');
+  var status = document.getElementById('wl-status');
+  var button = form.querySelector('button');
+  function say(msg, isError) { status.textContent = msg; status.className = 'status' + (isError ? ' error' : ''); }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (form.company.value) { say("You're on the list. We'll be in touch."); return; }
+    var email = input.value.trim().toLowerCase();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { say('Enter a valid email address.', true); input.focus(); return; }
+    button.disabled = true; say('Adding you…');
+    var source = new URLSearchParams(location.search).get('ref') || 'site';
+    fetch(API, {
+      method: 'POST',
+      headers: { 'apikey': KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ email: email, source: source.slice(0, 64) })
+    }).then(function (r) {
+      if (r.ok || r.status === 409) { form.reset(); say("You're on the list. We'll be in touch."); }
+      else { throw new Error(r.status); }
+    }).catch(function () {
+      say('Something went wrong. Try again, or email hello@fairwayanddials.com.', true);
+    }).finally(function () { button.disabled = false; });
+  });
+  input.addEventListener('input', function () { if (status.classList.contains('error')) say(''); });
+})();
+</script>
 </body>
 </html>

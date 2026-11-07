@@ -63,6 +63,7 @@ Goal: people can browse inventory on the site and buy.
 | 2026-10 | Name: **Fairway & Dials** (spoken "Fairway and Dials"); domain `fairwayanddials.com` |
 | 2026-10 | Hosting: Vercel; code in this repo |
 | 2026-10 | Watch release order follows a round of golf, launching with Tee Box; see `ROADMAP.md` |
+| 2026-11 | Waitlist emails live in their own Supabase project, `fairway-and-dials` (us-west-1), table `waitlist`; kept separate from the marketplace database |
 | — | Checkout approach (Phase 2) |
 
 ## Open questions
